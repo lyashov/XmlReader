@@ -47,8 +47,7 @@ public class GarService {
 
     private List<File> getFiles(File path){
         File[] arrFiles = path.listFiles();
-        List<File> lst = Arrays.asList(arrFiles);
-        return lst;
+        return Arrays.asList(arrFiles);
     }
 
     private Boolean isDate(String partPath){
@@ -75,9 +74,8 @@ public class GarService {
         logger.info("Start loading " + file.getParent() + "/" + file.getName());
         try (InputStream is = new FileInputStream(file)) {
             XMLAttributeReader xmlReader = new XMLAttributeReader(is, "OBJECT", RECORDS_PER_ITERATION);
-            Integer i = 0;
+            int i = 0; int j = 1;
             List<GarAddressobject> list;
-            Integer j = 1;
             while (xmlReader.hasNext()) {
                 list = xmlReader.getNextPart(GarAddressobject.class);
                 garAddressobjectRepository.saveAll(list);
@@ -90,8 +88,6 @@ public class GarService {
             }
             logger.info("saved records: " + i);
             xmlReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,9 +97,8 @@ public class GarService {
         logger.info("Start loading " + file.getParent() + "/" + file.getName());
         try (InputStream is = new FileInputStream(file)) {
             XMLAttributeReader xmlReader = new XMLAttributeReader(is, "ITEM", RECORDS_PER_ITERATION);
-            Integer i = 0;
+            int i = 0; int j = 1;
             List<GarAdmHierarchy> list;
-            Integer j = 1;
             while (xmlReader.hasNext()) {
                 list = xmlReader.getNextPart(GarAdmHierarchy.class);
                 garAdmHierarchyRepository.saveAll(list);
@@ -116,8 +111,6 @@ public class GarService {
             }
             logger.info("saved records: " + i);
             xmlReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -127,9 +120,8 @@ public class GarService {
         logger.info("Start loading " + file.getParent() + "/" + file.getName());
         try (InputStream is = new FileInputStream(file)) {
             XMLAttributeReader xmlReader = new XMLAttributeReader(is, "ITEM", RECORDS_PER_ITERATION);
-            Integer i = 0;
+            int i = 0; int j = 1;
             List<GarMunHierarchy> list;
-            Integer j = 1;
             while (xmlReader.hasNext()) {
                 list = xmlReader.getNextPart(GarMunHierarchy.class);
                 garMunHierarchyRepository.saveAll(list);
@@ -142,8 +134,6 @@ public class GarService {
             }
             logger.info("saved records: " + i);
             xmlReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -169,14 +159,12 @@ public class GarService {
 
     }
 
-    public void loadGar() throws Exception {
-        logger.info("Start console application...");
+    public void loadGar(){
+        logger.info("Start application...");
 
         List<File> folders = getFiles(new File(garPath));
-
         for (File folder : folders){
             if (!folder.isDirectory()) continue;
-
             processGar(folder);
         }
     }

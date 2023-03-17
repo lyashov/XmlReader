@@ -45,6 +45,7 @@ public class XMLAttributeReader {
             e.printStackTrace();
         }
     }
+
     public XMLAttributeReader(InputStream inputStream, String attr, Integer RECORDS_COUNT) {
         this.inputStream = inputStream;
         this.attr = attr;
